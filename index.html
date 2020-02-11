@@ -4,161 +4,75 @@
     <meta charset='utf-8' />
     <title>Cementiri</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" type="text/css" href="index.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%
-        }
-    </style>
-    <script>
-        function init() {
-            mapboxgl.accessToken =
-                'pk.eyJ1IjoiYXJtaWxsYXM3IiwiYSI6ImNrNDh0YTJrbzE1bXIzc3BqMGk2cjh0MW4ifQ.BsJudZIqIKLsc0k1YCPMFg';
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/armillas7/ck6gp57tl3ke51ikvv1v1kw2t',
-                center: [2.83726, 41.97227],
-                zoom: 13,
-                attributionControl: false,
-                pitch: 45,
-                hash: true
-            });
-
-            //var marker = new mapboxgl.Marker().setLngLat([2.161648, 41.3977]).addTo(map);
-
-            map.addControl(new mapboxgl.GeolocateControl());
-            map.addControl(new mapboxgl.AttributionControl({ compact: true }));
-            map.addControl(new mapboxgl.NavigationControl());
-
-            map.on('load', function () {
-
-                //addMobiliari();
-                addEstructura();
-                addSepultures();
-
-                function addSepultures() {
-                    map.addSource("sepultures_source", {
-                        type: "vector",
-                        url: "mapbox://armillas7.5ayrhllt"
-                    });
-
-                    map.addLayer({
-                        id: "sepultures",
-                        type: "circle",
-                        source: "sepultures_source",
-                        'source-layer': "sepultures-54xd48",
-                        'paint': {
-                            'circle-color': {
-                                property: 'ANY_CONST',
-                                    type: 'interval',
-                                    stops: [
-                                        [1800, '#8a8acb'],
-                                        [1900, '#610B21']
-                                    ]
-                                }
-                        }
-                    });
-
-                }
-
-                function addMobiliari() {
-                    map.addSource("mobiliari_source", {
-                        type: "vector",
-                        url: "mapbox://armillas7.0zjw01ii" //poner mapbox://vuestro id
-                    }); //fin map source
-
-                    map.addLayer({
-                        id: "mobiliari",
-                        type: "circle",
-                        source: "mobiliari_source",
-                        'source-layer': "mobiliari-bwrsx6" //poner vuestro titulo capa
-                    });
-
-                }
-
-                function addEstructura() {
-                    map.addSource("estructura_source", {
-                        type: "vector",
-                        url: "mapbox://armillas7.7w4ontwt" //poner mapbox://vuestro id
-                    }); //fin map source
-
-                    map.addLayer({
-                        id: "estructura",
-                        type: "fill-extrusion",
-                        source: "estructura_source",
-                        'source-layer': "estructura-8w4ydg",
-                        "paint": {
-                            "fill-extrusion-height": 10,
-                            "fill-extrusion-color": "#0B615E"
-                        }
-                    });
-
-                }
-            });
-
-            map.on('click', 'sepultures', function (e) {
-                console.log(e);
-                var sepYear = e.features[0].properties["ANY_CONST"];
-                var sepLocator = e.features[0].properties["LOCALITZAD"];
-                var sepConstName = e.features[0].properties["NOMCONST"].toLowerCase();;
-                var sepDpt = e.features[0].properties["NOMDPT"].toLowerCase();;
-                var sepLayer = e.features[0].properties["LAYER"];
-
-                var popupTxt = '';
-
-                console.log(e);
-                popupTxt +=
-                    '<div class="popup">' +
-                    '<div class="detail">' +
-                    '<span class="title">Any: </span>' +
-                    '<span class="detail-txt">' + sepYear + '</span>' +
-                    '</div>' +
-                    '<div class="detail">' +
-                    '<span class="title">Tipus: </span>' +
-                    '<span class="detail-txt">' + sepConstName + '</span>' +
-                    '</div>' +
-                    '<div class="detail">' +
-                    '<span class="title">Departament: </span>' +
-                    '<span class="detail-txt">' + sepDpt + '</span>' +
-                    '</div>' +
-                    '<div class="detail">' +
-                    '<span class="title">Localitazador: </span>' +
-                    '<span class="detail-txt">' + sepLocator + '</span>' +
-                    '</div>' +
-                    '<div class="detail">' +
-                    '<span class="title">Capa font: </span>' +
-                    '<span class="detail-txt">' + sepLayer + '</span>' +
-                    '</div>' +
-                    '</div>'
-                new mapboxgl.Popup()
-                    .setLngLat(e.lngLat)
-                    .setHTML(popupTxt)
-                    .addTo(map);
-            });
-
-            map.on('mouseenter', 'sepultures', function () {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            map.on('mouseleave', 'sepultures', function () {
-                map.getCanvas().style.cursor = '';
-            });
-        }
-    </script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
+    <script src="libs/jquery-3.4.1.min.js"></script>
+    <script src="index.js"></script>    
 </head>
 
 <body onload="init()">
+    <div id="menu">
+        <span id="sepu-any" class="menu-item active">Sepultures per any</span>
+        <span id="sepu-tipus" class="menu-item">Sepultures per tipus</span>
+    </div>
+    <div id="sepu-any-legend" class="legend">
+        <div class="intervals">
+            <div class="interval">
+                <span class="dot" style="background-color: #e7d01d;"></span>
+                <span class="int-txt">Abans 1860</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #be801e;"></span>
+                <span class="int-txt">1860-1890</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #e7271d;"></span>
+                <span class="int-txt">1890-1920</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #1f93c1;"></span>
+                <span class="int-txt">1920-1950</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #1f4dc1;"></span>
+                <span class="int-txt">1950-1980</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #781fc1;"></span>
+                <span class="int-txt">Després 1980</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="sepu-tipus-legend" class="legend">
+        <div class="intervals">
+            <div class="interval">
+                <span class="dot" style="background-color: aqua;"></span>
+                <span class="int-txt">Abans 1830</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: aqua;"></span>
+                <span class="int-txt">1830 - 1860</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: aqua;"></span>
+                <span class="int-txt">1860 - 1890</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: aqua;"></span>
+                <span class="int-txt">1890 - 1920</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: aqua;"></span>
+                <span class="int-txt">1920 - 1950</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: aqua;"></span>
+                <span class="int-txt">Després 1950</span>
+            </div>
+        </div>
+    </div>
     <div id="map"></div>
 </body>
 
