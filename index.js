@@ -1,5 +1,10 @@
-function init() {
+/*
+    David Armillas Camins
+    Febrer del 2020
+    Màster SIG
+*/
 
+function init() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYXJtaWxsYXM3IiwiYSI6ImNrNDh0YTJrbzE1bXIzc3BqMGk2cjh0MW4ifQ.BsJudZIqIKLsc0k1YCPMFg';
 
     var map = new mapboxgl.Map({
@@ -17,7 +22,6 @@ function init() {
     map.addControl(new mapboxgl.NavigationControl());
 
     map.on('load', function () {
-
         addEstructura();
         addMobiliari();
         addSepultures();
@@ -104,14 +108,13 @@ function init() {
                     ]
                 }
             });
-
         }
 
         function addEstructura() {
             map.addSource("estructura_source", {
                 type: "vector",
-                url: "mapbox://armillas7.7w4ontwt" //poner mapbox://vuestro id
-            }); //fin map source
+                url: "mapbox://armillas7.7w4ontwt"
+            });
 
             map.addLayer({
                 id: "estructura",
@@ -123,7 +126,6 @@ function init() {
                     "fill-extrusion-color": "#BBB"
                 }
             });
-
         }
     });
 

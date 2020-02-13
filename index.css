@@ -1,9 +1,17 @@
+/*
+    David Armillas Camins
+    Febrer del 2020
+    Màster SIG
+*/
+
 body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
 }
 
+
+/* Estils del mapa */
 #map {
     position: absolute;
     top: 0;
@@ -12,99 +20,8 @@ body {
     height: 100%
 }
 
-.popup {
-    display: block;
-    padding: 12px 8px;
-}
 
-.popup .popup-title, .popup-title .pt-locator {
-    display: inline-block;
-}
-
-.popup .popup-title {
-    font-size: 18px;
-    padding: 8px;
-    border-radius: 6px;
-    text-transform: capitalize;
-    background-color: #1e1e1e;
-    color: #FFFFFF;
-}
-
-.popup-title .pt-locator {
-    font-weight: bold;
-    margin-left: 10px;
-}
-
-.popup .title {
-    font-weight: bold;
-}
-
-.popup .details {
-    margin-top: 6px;
-    margin-left: 8px;
-}
-
-.popup .details .detail {
-    text-transform: capitalize;
-    margin-bottom: -3px;
-}
-
-.legend {
-    background: #1e1e1e;
-    color: #DDD;
-    position: absolute;
-    z-index: 1;
-    top: 130px;
-    left: 20px;
-    border-radius: 6px;
-    width: 136px;
-    padding: 10px;
-    font-size: 14px;
-}
-
-.legend .dot {
-    display: inline-block;
-    height: 8px;
-    width: 8px;
-    background-color: #FFFFFF;
-    border-radius: 50%;
-    margin-bottom: 2px;
-    margin-left: 4px;
-    margin-right: 4px;
-}
-
-.checkbox {
-
-    position: absolute;
-    z-index: 1;
-    left: 20px;
-    border-radius: 6px;
-    width: 136px;
-    padding: 10px;
-    font-size: 14px;
-}
-
-.checkbox.extrusion {
-    top: 278px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    background: #fff;
-    color: #404040;
-}
-
-.checkbox.mobiliari {
-    top: 318px;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    background-color: #1e1e1e;
-    color: #FFF;
-}
-
-.checkbox .checkbox-txt {
-    display: inline-block;
-    margin-left: 6px;
-}
-
+/* Estils del menu per escollir capa sepultures */
 #menu {
     position: absolute;
     z-index: 1;
@@ -144,3 +61,132 @@ body {
     border-bottom-left-radius: 6px;
 }
 
+
+/* Estils de les llegendes */
+.legend {
+    background: #1e1e1e;
+    color: #DDD;
+    position: absolute;
+    z-index: 1;
+    top: 130px;
+    left: 20px;
+    border-radius: 6px;
+    width: 136px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.legend .dot {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    margin-bottom: 2px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+
+/* Estils dels checkbox */
+.checkbox {
+
+    position: absolute;
+    z-index: 1;
+    left: 20px;
+    border-radius: 6px;
+    width: 136px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.checkbox.extrusion {
+    top: 278px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background: #fff;
+    color: #404040;
+}
+
+.checkbox.mobiliari {
+    top: 318px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    background-color: #1e1e1e;
+    color: #FFF;
+}
+
+.checkbox .checkbox-txt {
+    display: inline-block;
+    margin-left: 6px;
+}
+
+
+/* Estils de apartat de l'autor */
+#contact {
+    position: absolute;
+    z-index: 1;
+    top: 30px;
+    right: 60px;
+    border-radius: 6px;
+    width: 156px;
+}
+
+#contact span {
+    font-size: 12px;
+    color: #404040;
+    display: block;
+    padding: 6px;
+    text-align: center;
+    background-color: #fff;
+}
+
+
+#contact .first {
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+#contact .last {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+
+/* Estils del popup */
+.popup {
+    display: block;
+    padding: 12px 8px;
+}
+
+.popup .popup-title, .popup-title .pt-locator {
+    display: inline-block;
+}
+
+.popup .popup-title {
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 6px;
+    text-transform: capitalize;
+    background-color: #1e1e1e;
+    color: #FFFFFF;
+}
+
+.popup-title .pt-locator {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.popup .title {
+    font-weight: bold;
+}
+
+.popup .details {
+    margin-top: 6px;
+    margin-left: 8px;
+}
+
+.popup .details .detail {
+    text-transform: capitalize;
+    margin-bottom: -3px;
+}
