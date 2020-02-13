@@ -13,9 +13,39 @@
 
 <body onload="init()">
     <div id="menu">
-        <span id="sepu-any" class="menu-item active">Sepultures per any</span>
-        <span id="sepu-tipus" class="menu-item">Sepultures per tipus</span>
+        <span id="sepu-any" class="menu-item active sepu-a">Sepultures per any</span>
+        <span id="sepu-tipus" class="menu-item sepu-t">Sepultures per tipus</span>
     </div>
+
+    <div id="sepu-tipus-legend" class="legend">
+        <div class="intervals">
+            <div class="interval">
+                <span class="dot" style="background-color: #EBC414;"></span>
+                <span class="int-txt">Altar</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #5B463C;"></span>
+                <span class="int-txt">Columbari</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #B4A68F;"></span>
+                <span class="int-txt">Hipogeu</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #A16766;"></span>
+                <span class="int-txt">Nínxol</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #9E252A;"></span>
+                <span class="int-txt">Panteó</span>
+            </div>
+            <div class="interval">
+                <span class="dot" style="background-color: #E14C7A;"></span>
+                <span class="int-txt">Tomba</span>
+            </div>
+        </div>
+    </div>
+
     <div id="sepu-any-legend" class="legend">
         <div class="intervals">
             <div class="interval">
@@ -24,19 +54,19 @@
             </div>
             <div class="interval">
                 <span class="dot" style="background-color: #be801e;"></span>
-                <span class="int-txt">1860-1890</span>
+                <span class="int-txt">1860 - 1890</span>
             </div>
             <div class="interval">
                 <span class="dot" style="background-color: #e7271d;"></span>
-                <span class="int-txt">1890-1920</span>
+                <span class="int-txt">1890 - 1920</span>
             </div>
             <div class="interval">
                 <span class="dot" style="background-color: #1f93c1;"></span>
-                <span class="int-txt">1920-1950</span>
+                <span class="int-txt">1920 - 1950</span>
             </div>
             <div class="interval">
                 <span class="dot" style="background-color: #1f4dc1;"></span>
-                <span class="int-txt">1950-1980</span>
+                <span class="int-txt">1950 - 1980</span>
             </div>
             <div class="interval">
                 <span class="dot" style="background-color: #781fc1;"></span>
@@ -45,34 +75,15 @@
         </div>
     </div>
 
-    <div id="sepu-tipus-legend" class="legend">
-        <div class="intervals">
-            <div class="interval">
-                <span class="dot" style="background-color: aqua;"></span>
-                <span class="int-txt">Abans 1830</span>
-            </div>
-            <div class="interval">
-                <span class="dot" style="background-color: aqua;"></span>
-                <span class="int-txt">1830 - 1860</span>
-            </div>
-            <div class="interval">
-                <span class="dot" style="background-color: aqua;"></span>
-                <span class="int-txt">1860 - 1890</span>
-            </div>
-            <div class="interval">
-                <span class="dot" style="background-color: aqua;"></span>
-                <span class="int-txt">1890 - 1920</span>
-            </div>
-            <div class="interval">
-                <span class="dot" style="background-color: aqua;"></span>
-                <span class="int-txt">1920 - 1950</span>
-            </div>
-            <div class="interval">
-                <span class="dot" style="background-color: aqua;"></span>
-                <span class="int-txt">Després 1950</span>
-            </div>
-        </div>
+    <div class="checkbox extrusion">
+        <input type="checkbox" id="checkbox-extrusion" checked>
+        <span class="checkbox-txt">Estructura 3D</span>
     </div>
+    <div class="checkbox mobiliari">
+        <input type="checkbox" id="checkbox-mobiliari" checked>
+        <span class="checkbox-txt">Mobiliari</span>
+    </div>
+
     <div id="map"></div>
 </body>
 

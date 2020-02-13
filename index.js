@@ -6,7 +6,7 @@ function init() {
         container: 'map',
         style: 'mapbox://styles/armillas7/ck6gp57tl3ke51ikvv1v1kw2t',
         center: [2.83726, 41.97227],
-        zoom: 13,
+        zoom: 17,
         attributionControl: false,
         pitch: 45,
         hash: true
@@ -19,24 +19,15 @@ function init() {
     map.on('load', function () {
 
         addEstructura();
-        //addMobiliari();
+        addMobiliari();
         addSepultures();
-        addMenu();
-        addLegend();
+        map.setLayoutProperty("sepultures-tipus", 'visibility', 'none');
 
         function addSepultures() {
             map.addSource("sepultures_source", {
                 type: "vector",
                 url: "mapbox://armillas7.5ayrhllt"
             });
-
-            map.addLayer({
-                id: "sepultures-tipus",
-                type: "circle",
-                source: "sepultures_source",
-                'source-layer': "sepultures-54xd48"
-            });
-        }
 
             map.addLayer({
                 id: "sepultures-any",
@@ -59,17 +50,59 @@ function init() {
                 }
             });
 
+            map.addLayer({
+                id: "sepultures-tipus",
+                type: "circle",
+                source: "sepultures_source",
+                'source-layer': "sepultures-54xd48",
+                'paint': {
+                    'circle-color': [
+                        "match",
+                            ['get', 'NOMCONST'],
+                            'ALTAR',
+                            '#EBC414',
+                            'COLUMBARI',
+                            '#5B463C',
+                            'HIPOGEU',
+                            '#B4A68F',
+                            'NINXOL',
+                            '#A16766',
+                            'PANTEO',
+                            '#9E252A',
+                            'TOMBA',
+                            '#E14C7A',
+                            '#CCC'
+                    ]
+                }
+            });
+        }
+
         function addMobiliari() {
             map.addSource("mobiliari_source", {
                 type: "vector",
-                url: "mapbox://armillas7.0zjw01ii" //poner mapbox://vuestro id
-            }); //fin map source
+                url: "mapbox://armillas7.0zjw01ii"
+            });
 
             map.addLayer({
-                id: "mobiliari",
-                type: "circle",
-                source: "mobiliari_source",
-                'source-layer': "mobiliari-bwrsx6" //poner vuestro titulo capa
+                "id": "mobiliari",
+                "type": "symbol",
+                'source': "mobiliari_source",
+                'source-layer': "mobiliari-bwrsx6",
+                "layout": {
+                    "icon-image": [
+                        "match",
+                        ["get", "MOB_TYPE"],
+                        ["FANAL"],
+                        "marker-11",
+                        ["BUS"],
+                        "bus",
+                        ["BANC"],
+                        "picnic-site-15",
+                        ["SEMAFOR"],
+                        "traffic-signal",
+                        "park-11"
+                    ]
+                }
             });
 
         }
@@ -86,35 +119,45 @@ function init() {
                 source: "estructura_source",
                 'source-layer': "estructura-8w4ydg",
                 "paint": {
-                    "fill-extrusion-height": 10,
-                    "fill-extrusion-color": "#0B615E"
+                    "fill-extrusion-height": 3,
+                    "fill-extrusion-color": "#BBB"
                 }
             });
 
         }
+    });
 
-        function addMenu() {
-            $("#sepu-any").click(function() {
-                map.setLayoutProperty("sepultures-any", 'visibility', 'visible');
-                map.setLayoutProperty("sepultures-tipus", 'visibility', 'none');
-                $("#sepu-any").addClass("active");
-                $("#sepu-tipus").removeClass("active");
-                $("#sepu-any-legend").show();
-                $("#sepu-tipus-legend").hide();
-            });
+    $("#sepu-any").click(function() {
+        map.setLayoutProperty("sepultures-any", 'visibility', 'visible');
+        map.setLayoutProperty("sepultures-tipus", 'visibility', 'none');
+        $("#sepu-any").addClass("active");
+        $("#sepu-tipus").removeClass("active");
+        $("#sepu-any-legend").show();
+        $("#sepu-tipus-legend").hide();
+    });
 
-            $("#sepu-tipus").click(function() {
-                map.setLayoutProperty("sepultures-tipus", 'visibility', 'visible');
-                map.setLayoutProperty("sepultures-any", 'visibility', 'none');
-                $("#sepu-tipus").addClass("active");
-                $("#sepu-any").removeClass("active");
-                $("#sepu-tipus-legend").show();
-                $("#sepu-any-legend").hide();
-            });
+    $("#sepu-tipus").click(function() {
+        map.setLayoutProperty("sepultures-tipus", 'visibility', 'visible');
+        map.setLayoutProperty("sepultures-any", 'visibility', 'none');
+        $("#sepu-tipus").addClass("active");
+        $("#sepu-any").removeClass("active");
+        $("#sepu-tipus-legend").show();
+        $("#sepu-any-legend").hide();
+    });
+
+    $('#checkbox-extrusion').change(function() {
+        if(!this.checked) {
+            map.setLayoutProperty("estructura", 'visibility', 'none');
+        } else {
+            map.setLayoutProperty("estructura", 'visibility', 'visible');
         }
+    });
 
-        function addLegend(){
-
+    $('#checkbox-mobiliari').change(function() {
+        if(!this.checked) {
+            map.setLayoutProperty("mobiliari", 'visibility', 'none');
+        } else {
+            map.setLayoutProperty("mobiliari", 'visibility', 'visible');
         }
     });
 
@@ -127,37 +170,45 @@ function init() {
     });
 
     function addPopup(e) {
+        console.log(e);
         var sepYear = e.features[0].properties["ANY_CONST"];
         var sepLocator = e.features[0].properties["LOCALITZAD"];
-        var sepConstName = e.features[0].properties["NOMCONST"].toLowerCase();;
-        var sepDpt = e.features[0].properties["NOMDPT"].toLowerCase();;
+        var sepConstName = e.features[0].properties["NOMCONST"].toLowerCase();
+        var sepDpt = e.features[0].properties["NOMDPT"].toLowerCase();
         var sepLayer = e.features[0].properties["LAYER"];
 
         var popupTxt = '';
 
         popupTxt +=
             '<div class="popup">' +
-            '<div class="detail">' +
-            '<span class="title">Any: </span>' +
-            '<span class="detail-txt">' + sepYear + '</span>' +
-            '</div>' +
-            '<div class="detail">' +
-            '<span class="title">Tipus: </span>' +
-            '<span class="detail-txt">' + sepConstName + '</span>' +
-            '</div>' +
-            '<div class="detail">' +
-            '<span class="title">Departament: </span>' +
-            '<span class="detail-txt">' + sepDpt + '</span>' +
-            '</div>' +
-            '<div class="detail">' +
-            '<span class="title">Localitazador: </span>' +
-            '<span class="detail-txt">' + sepLocator + '</span>' +
-            '</div>' +
-            '<div class="detail">' +
-            '<span class="title">Capa font: </span>' +
-            '<span class="detail-txt">' + sepLayer + '</span>' +
-            '</div>' +
+                '<div class="popup-title">' +
+                    '<span class="pt-const-type">' + sepConstName + '</span>' +
+                    '<span class="pt-locator">' + sepLocator + '</span>' +
+                '</div>' +
+                '<div class="details">' +
+                    '<div class="detail">' +
+                        '<span class="title">Any: </span>' +
+                        '<span class="detail-txt">' + sepYear + '</span>' +
+                    '</div>' +
+                    '<div class="detail">' +
+                        '<span class="title">Tipus: </span>' +
+                        '<span class="detail-txt">' + sepConstName + '</span>' +
+                    '</div>' +
+                    '<div class="detail">' +
+                        '<span class="title">Departament: </span>' +
+                        '<span class="detail-txt">' + sepDpt + '</span>' +
+                    '</div>' +
+                    '<div class="detail">' +
+                        '<span class="title">Localitzador: </span>' +
+                        '<span class="detail-txt">' + sepLocator + '</span>' +
+                    '</div>' +
+                    '<div class="detail">' +
+                        '<span class="title">Capa font: </span>' +
+                        '<span class="detail-txt">' + sepLayer + '</span>' +
+                    '</div>' +
+                '</div>' +
             '</div>'
+
         new mapboxgl.Popup()
             .setLngLat(e.lngLat)
             .setHTML(popupTxt)

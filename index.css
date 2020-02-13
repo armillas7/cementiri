@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #map {
@@ -13,26 +14,52 @@ body {
 
 .popup {
     display: block;
+    padding: 12px 8px;
+}
+
+.popup .popup-title, .popup-title .pt-locator {
+    display: inline-block;
+}
+
+.popup .popup-title {
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 6px;
+    text-transform: capitalize;
+    background-color: #1e1e1e;
+    color: #FFFFFF;
+}
+
+.popup-title .pt-locator {
+    font-weight: bold;
+    margin-left: 10px;
 }
 
 .popup .title {
     font-weight: bold;
 }
 
-.popup .detail {
+.popup .details {
+    margin-top: 6px;
+    margin-left: 8px;
+}
+
+.popup .details .detail {
     text-transform: capitalize;
+    margin-bottom: -3px;
 }
 
 .legend {
-    background: #fff;
+    background: #1e1e1e;
+    color: #DDD;
     position: absolute;
     z-index: 1;
     top: 130px;
     left: 20px;
-    border-radius: 3px;
-    width: 180px;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    font-family: 'Open Sans', sans-serif;
+    border-radius: 6px;
+    width: 136px;
+    padding: 10px;
+    font-size: 14px;
 }
 
 .legend .dot {
@@ -46,41 +73,74 @@ body {
     margin-right: 4px;
 }
 
-#menu {
+.checkbox {
+
+    position: absolute;
+    z-index: 1;
+    left: 20px;
+    border-radius: 6px;
+    width: 136px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.checkbox.extrusion {
+    top: 278px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
     background: #fff;
+    color: #404040;
+}
+
+.checkbox.mobiliari {
+    top: 318px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    background-color: #1e1e1e;
+    color: #FFF;
+}
+
+.checkbox .checkbox-txt {
+    display: inline-block;
+    margin-left: 6px;
+}
+
+#menu {
     position: absolute;
     z-index: 1;
     top: 30px;
     left: 20px;
-    border-radius: 3px;
-    width: 180px;
-    font-family: 'Open Sans', sans-serif;
+    border-radius: 6px;
+    width: 156px;
 }
 
 #menu span {
-    font-size: 13px;
+    font-size: 14px;
     color: #404040;
     display: block;
-    margin: 0;
-    padding: 0;
     padding: 10px;
-    text-decoration: none;
     text-align: center;
-}
-
-#menu span:hover {
-    background-color: #f8f8f8;
-    color: #404040;
-    cursor: pointer;
+    background-color: #fff;
 }
 
 #menu .active {
-    background-color: #3887be;
-    color: #ffffff;
+    background-color: #1e1e1e;
+    color: #FFF;
 }
 
-#menu .active:hover {
-    background-color: #3887be;
-    color: #ffffff;
-    cursor: default;
+#menu span:hover, #menu .active:hover {
+    background-color: #2f2f2f;
+    color: #FFF;
+    cursor: pointer;
 }
+
+#menu .sepu-a {
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+#menu .sepu-t {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
